@@ -1,0 +1,6 @@
+"ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0060589","nucleoside-triphosphatase regulator activity","15/214","429/28407",1.03484390196331e-06,9.68213421240725e-05,7.86904920995977e-05,"Arhgef4/Rtkn/Ralbp1/Thg1l/Sipa1l3/Myo9a/Nckap1l/Arap1/Depdc5/Bcar3/Rgs12/Dennd1b/Smap2/Arhgap33/Lamtor1",15
+"GO:0005543","phospholipid binding","13/214","492/28407",0.000100606242590518,0.00341390516523823,0.00277461426933848,"Hmgb1/Ighm/Arap1/Syt12/Syt3/Sh3pxd2b/Arfip2/Hip1/Dennd1b/Snca/Hs1bp3/Cpne9/Arhgap33",13
+"GO:1901618","organic hydroxy compound transmembrane transporter activity","4/214","53/28407",0.000686825920478668,0.0145664330634851,0.0118387099450928,"Slc6a3/Slc10a4/Slc18a2/Abcg1",4
+"GO:0030276","clathrin binding","4/214","70/28407",0.00194684596710832,0.0307659660901581,0.0250047041121541,"Ston2/Syt12/Syt3/Hip1",4
+"GO:0043495","protein-membrane adaptor activity","3/214","35/28407",0.0023098677727979,0.0345800793045332,0.0281045831179434,"Nherf2/Syne1/Lamtor1",3

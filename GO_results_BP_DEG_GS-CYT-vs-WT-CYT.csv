@@ -1,0 +1,74 @@
+"ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0007264","small GTPase mediated signal transduction","24/260","428/28891",1.31315965305866e-12,4.24938463729783e-09,3.45706557084181e-09,"Rgl2/Farp2/Rtn4r/Abl1/Arhgap18/Sipa1l3/Dab1/Sipa1/Map4k4/Dhcr24/Apoa1/Abca1/Phactr4/Dennd4c/Nfix/Pdgfrb/Psd2/Gna12/Cdc42ep1/Apoe/Adgrg1/Rac2/Rab9b/Cdh13",24
+"GO:0007015","actin filament organization","16/260","471/28891",6.64411859572587e-06,0.00165387444428992,0.00134550126379841,"Abl1/Arhgap18/Ttn/Daam2/Rictor/Arhgef10/Smad3/Apoa1/Jmy/Snx9/Sh3kbp1/Fam107a/Cdc42ep1/Wasf3/Tmod2/Rac2",16
+"GO:0032956","regulation of actin cytoskeleton organization","13/260","351/28891",2.00826542294388e-05,0.00345909371101781,0.00281412834924713,"Abl1/Arhgap18/Daam2/Rictor/Arhgef10/Smad3/Apoa1/Snx9/Fam107a/Pdgfrb/Cdc42ep1/Wasf3/Tmod2",13
+"GO:0001558","regulation of cell growth","15/260","459/28891",2.03098827284729e-05,0.00345909371101781,0.00281412834924713,"Epm2a/Rtn4r/Abl1/Uri1/Rictor/Smad3/Macf1/Pum2/Fam107a/Cdkn1b/Cdkn2aip/Apoe/Smarcb1/Eif2b2/Map2k5",15
+"GO:0032535","regulation of cellular component size","14/260","411/28891",2.44235413151714e-05,0.00359248089526794,0.00292264482436573,"Atp7a/Rtn4r/Abl1/Arhgap18/Daam2/Rictor/Snx9/Macf1/Pum2/Cdc42ep1/Rb1cc1/Tmod2/Apoe/Eif2b2",14
+"GO:0031032","actomyosin structure organization","10/260","218/28891",3.08915800278885e-05,0.00434631099870639,0.0035359195263043,"Abl1/Ttn/Arhgef10/Smad3/Apoa1/Pdgfrb/Tmod2/Epb41l5/Pgm5/Krt19",10
+"GO:0150116","regulation of cell-substrate junction organization","6/260","69/28891",3.73977709688491e-05,0.00504246611896649,0.00410227303478472,"Abl1/Map4k4/Smad3/Macf1/Fam107a/Epb41l5",6
+"GO:1902905","positive regulation of supramolecular fiber organization","9/260","183/28891",4.49353503637386e-05,0.00537978316623263,0.00437669562772357,"Abl1/Rictor/Arhgef10/Smad3/Apoa1/Snx9/Cdkn1b/Cdc42ep1/Wasf3",9
+"GO:0010810","regulation of cell-substrate adhesion","10/260","228/28891",4.51525571592069e-05,0.00537978316623263,0.00437669562772357,"Abl1/Map4k4/Smad3/Apoa1/Stk4/Macf1/Fam107a/Epb41l5/Rac2/Cdh13",10
+"GO:0043254","regulation of protein-containing complex assembly","14/260","437/28891",4.75249028876698e-05,0.00537978316623263,0.00437669562772357,"Tfip11/Epn1/Farp2/Abl1/Arhgap18/Daam2/Rictor/Snx9/Abca1/Cdkn1b/Cdc42ep1/Tmod2/Aida/Apoe",14
+"GO:0099504","synaptic vesicle cycle","10/260","230/28891",4.85940862997247e-05,0.00537978316623263,0.00437669562772357,"Erc1/Slc18a2/Sh3gl3/Th/Snx9/Syt5/Sh3gl1/Snap23/Cacna1b/Atp6v1g1",10
+"GO:1902903","regulation of supramolecular fiber organization","13/260","393/28891",6.41170911206148e-05,0.00610243843724439,0.00496460820101107,"Abl1/Arhgap18/Daam2/Rictor/Arhgef10/Smad3/Apoa1/Snx9/Cdkn1b/Cdc42ep1/Wasf3/Tmod2/Apoe",13
+"GO:0030100","regulation of endocytosis","12/260","344/28891",7.41980915682028e-05,0.00666958400874178,0.00542600663777998,"Sh3gl3/Sod1/Csk/Ighm/Apoa1/Ankrd13d/Snx9/Scyl2/Neu3/Sh3gl1/Apoe/Cdh13",12
+"GO:0032970","regulation of actin filament-based process","13/260","402/28891",8.05077426939732e-05,0.00667503484153159,0.00543044113547281,"Abl1/Arhgap18/Daam2/Rictor/Arhgef10/Smad3/Apoa1/Snx9/Fam107a/Pdgfrb/Cdc42ep1/Wasf3/Tmod2",13
+"GO:1901888","regulation of cell junction assembly","10/260","246/28891",8.51135423673539e-05,0.00671774202684774,0.00546518535200904,"Abl1/Map4k4/Smad3/Flrt1/Macf1/Fam107a/Ptpn13/Gpc4/Epb41l5/Asic2",10
+"GO:0007059","chromosome segregation","13/260","416/28891",0.000113211685360452,0.008722690805391,0.00709630138061378,"Tubgcp4/Tubgcp2/Arhgef10/Ncor1/Hnrnpu/Anapc5/Chmp7/Pum2/Ik/Top2b/Smarcb1/Smc3/Ntmt1",13
+"GO:0051225","spindle assembly","7/260","123/28891",0.000128958299589028,0.00970486180163009,0.00789534167128907,"Tubgcp4/Tubgcp2/Arhgef10/Ncor1/Hnrnpu/Chmp7/Smc3",7
+"GO:0140014","mitotic nuclear division","10/260","267/28891",0.000166314055798335,0.0101545714068569,0.00826120066636816,"Arhgef10/Hnrnpu/Anapc5/Chmp7/Ankle2/Ik/Cdkn1b/Nfix/Pdgfrb/Smc3",10
+"GO:0048880","sensory system development","13/260","435/28891",0.000175550018128819,0.0105199973826826,0.0085584911372354,"Ift122/Sipa1l3/Spred3/Ift172/Th/Smad3/Celf4/Sall2/Phactr4/Cdkn1b/Nfix/Pdgfrb/Tdrd7",13
+"GO:1900272","negative regulation of long-term synaptic potentiation","3/260","13/28891",0.00019275116530445,0.0105719113716136,0.00860072550270169,"Abl1/Fam107a/Apoe",3
+"GO:0002757","immune response-activating signaling pathway","13/260","440/28891",0.000196182047023184,0.010580751736117,0.00860791753692952,"Abl1/Ankrd17/Csk/Rnf31/Ighm/Zc3hav1/Trim25/Rftn1/Pum2/Otud4/Ltf/Eif2b2/S100a14",13
+"GO:0002764","immune response-regulating signaling pathway","13/260","450/28891",0.000243754770311565,0.0125204831226702,0.0101859762831951,"Abl1/Ankrd17/Csk/Rnf31/Ighm/Zc3hav1/Trim25/Rftn1/Pum2/Otud4/Ltf/Eif2b2/S100a14",13
+"GO:0150117","positive regulation of cell-substrate junction organization","4/260","35/28891",0.000269445226137092,0.0132109810875702,0.0107477274412898,"Abl1/Map4k4/Smad3/Epb41l5",4
+"GO:0010811","positive regulation of cell-substrate adhesion","7/260","140/28891",0.000286584532744549,0.0135300020547028,0.0110072653499485,"Abl1/Map4k4/Smad3/Apoa1/Stk4/Epb41l5/Cdh13",7
+"GO:0016055","Wnt signaling pathway","13/260","460/28891",0.000300880280102164,0.0135300020547028,0.0110072653499485,"Epm2a/Abl1/Daam2/Smad3/Scyl2/Stk4/Macf1/Lrp4/Gpc4/Apoe/Pbxip1/Celsr3/Krt6a",13
+"GO:0055001","muscle cell development","9/260","236/28891",0.000307537258678561,0.0135300020547028,0.0110072653499485,"Ttn/Hdac4/Hnrnpu/Speg/Pdgfrb/Tmod2/Megf10/Pgm5/Krt19",9
+"GO:0016331","morphogenesis of embryonic epithelium","8/260","187/28891",0.00030831560231123,0.0135300020547028,0.0110072653499485,"Ift122/Glmn/Abl1/Ift172/Nup50/Stk4/Phactr4/Epb41l5",8
+"GO:0198738","cell-cell signaling by wnt","13/260","462/28891",0.000313581629821603,0.0135300020547028,0.0110072653499485,"Epm2a/Abl1/Daam2/Smad3/Scyl2/Stk4/Macf1/Lrp4/Gpc4/Apoe/Pbxip1/Celsr3/Krt6a",13
+"GO:0070306","lens fiber cell differentiation","4/260","37/28891",0.000335108024673989,0.0137267033904434,0.0111672907356382,"Spred3/Smad3/Cdkn1b/Tdrd7",4
+"GO:0060560","developmental growth involved in morphogenesis","10/260","292/28891",0.000339913691347997,0.0137495088150265,0.0111858439744913,"Npr2/Rtn4r/Abl1/Flrt1/Macf1/Pum2/Nfix/Epb41l5/Apoe/Eif2b2",10
+"GO:0031331","positive regulation of cellular catabolic process","11/260","349/28891",0.000351851005543771,0.0140566648634524,0.0114357292380113,"Epm2a/Plekhf1/Patl1/Rnf31/Zc3hav1/Snx9/Hnrnpu/Tnrc6b/Rb1cc1/Apoe/Atg2a",11
+"GO:0140029","exocytic process","6/260","104/28891",0.000364314694632598,0.0143771018515986,0.0116964191434676,"Erc1/Slc18a2/Exoc6b/Exoc3/Snap23/Cacna1b",6
+"GO:0021510","spinal cord development","6/260","105/28891",0.000383522105676383,0.0146009121643385,0.0118784989015063,"Ift122/Dab1/Daam2/Dcc/Ift172/Nfix",6
+"GO:0007051","spindle organization","8/260","194/28891",0.000394242818816688,0.0148345321126838,0.0120685592394191,"Tubgcp4/Tubgcp2/Arhgef10/Ncor1/Hnrnpu/Chmp7/Smc3/Ntmt1",8
+"GO:0055091","phospholipid homeostasis","3/260","17/28891",0.000446238402720449,0.0164094030818565,0.0133497876220555,"Apoa1/Abca1/Gpam",3
+"GO:0021915","neural tube development","8/260","198/28891",0.00045149296056756,0.016416081128052,0.0133552205130629,"Ift122/Glmn/Abl1/Ift172/Nup50/Stk4/Sall2/Phactr4",8
+"GO:0030239","myofibril assembly","5/260","73/28891",0.000518106979508817,0.0182238498444623,0.0148259216905212,"Ttn/Pdgfrb/Tmod2/Pgm5/Krt19",5
+"GO:0007249","canonical NF-kappaB signal transduction","9/260","258/28891",0.000586323851376175,0.019360652888299,0.0157507621083976,"Erc1/Abl1/Ankrd17/Rnf31/Faim/Zc3hav1/Trim25/Gbp3/Ltf",9
+"GO:0030307","positive regulation of cell growth","8/260","210/28891",0.000664895194147054,0.021094125963332,0.0171610204392341,"Rictor/Macf1/Pum2/Cdkn2aip/Apoe/Smarcb1/Eif2b2/Map2k5",8
+"GO:0045927","positive regulation of growth","10/260","324/28891",0.000761266519153222,0.0232401741130172,0.0189069271539445,"Rictor/Rftn1/Macf1/Pum2/Gpam/Cdkn2aip/Apoe/Smarcb1/Eif2b2/Map2k5",10
+"GO:0010631","epithelial cell migration","10/260","328/28891",0.000835730328260522,0.0238586136634197,0.019410055550131,"Abl1/Daam2/Map4k4/Apoa1/Macf1/Epb41l5/Mia3/Apoe/Cdh13/Map2k5",10
+"GO:0003382","epithelial cell morphogenesis","4/260","47/28891",0.000843486069727858,0.0238586136634197,0.019410055550131,"Sipa1l3/Sipa1/Flnb/Epb41l5",4
+"GO:0034377","plasma lipoprotein particle assembly","3/260","21/28891",0.000849878365491282,0.0238586136634197,0.019410055550131,"Apoa1/Abca1/Apoe",3
+"GO:0072175","epithelial tube formation","7/260","168/28891",0.000852310366724691,0.0238586136634197,0.019410055550131,"Ift122/Glmn/Abl1/Ift172/Nup50/Stk4/Phactr4",7
+"GO:0022604","regulation of cell morphogenesis","9/260","277/28891",0.000969165579497901,0.0261351651271267,0.0212621325817917,"Arhgap18/Ighm/Prpf40a/Macf1/Sh3kbp1/Cfdp1/Gna12/Cdc42ep1/Wasf3",9
+"GO:0022411","cellular component disassembly","12/260","462/28891",0.00106103659784004,0.0280674062219492,0.0228340976387662,"Tfip11/Sh3gl3/Map4k4/Acin1/Chmp7/Pex14/Sh3gl1/Rb1cc1/Tmod2/Pbxip1/Smarcb1/Atg2a",12
+"GO:0031346","positive regulation of cell projection organization","12/260","463/28891",0.00108075104275273,0.0280674062219492,0.0228340976387662,"Atp7a/Abl1/Hdac4/Dcc/Macf1/Pum2/Crtc1/Cdc42ep1/Apoe/Eif2b2/Rac2/Efemp1",12
+"GO:0043393","regulation of protein binding","8/260","228/28891",0.00113071751259524,0.0284392688475548,0.023136624613797,"Tfip11/Abl1/Hdac4/Stk4/Pex14/Epb41l5/Atp2a3/Apoe",8
+"GO:0061387","regulation of extent of cell growth","6/260","129/28891",0.00113370385702552,0.0284392688475548,0.023136624613797,"Rtn4r/Abl1/Macf1/Pum2/Apoe/Eif2b2",6
+"GO:1901890","positive regulation of cell junction assembly","6/260","129/28891",0.00113370385702552,0.0284392688475548,0.023136624613797,"Abl1/Map4k4/Smad3/Flrt1/Epb41l5/Asic2",6
+"GO:0042692","muscle cell differentiation","12/260","468/28891",0.00118394983434785,0.0294704388764222,0.0239755278218502,"Glmn/Ttn/Hdac4/Ankrd17/Hnrnpu/Speg/Pdgfrb/Tnpo2/Tmod2/Megf10/Pgm5/Krt19",12
+"GO:0048638","regulation of developmental growth","11/260","405/28891",0.00119302456514565,0.0294704388764222,0.0239755278218502,"Sod1/Rtn4r/Abl1/Ncor1/Stk4/Macf1/Pum2/Cdkn1b/Gpam/Apoe/Eif2b2",11
+"GO:0002040","sprouting angiogenesis","6/260","131/28891",0.00122723648932998,0.0298500919659396,0.0242843926897453,"Epn1/Abl1/S100a1/Mia3/Cdh13/Map2k5",6
+"GO:0014812","muscle cell migration","6/260","131/28891",0.00122723648932998,0.0298500919659396,0.0242843926897453,"Atp7a/Hdac4/Pdgfrb/Gna12/Megf10/Thbs4",6
+"GO:0001667","ameboidal-type cell migration","12/260","471/28891",0.00124970254401669,0.0299558328328741,0.0243704176419941,"Abl1/Daam2/Map4k4/Apoa1/Macf1/Phactr4/Gna12/Epb41l5/Mia3/Apoe/Cdh13/Map2k5",12
+"GO:0035148","tube formation","7/260","182/28891",0.00135608541020576,0.0319981971266437,0.026031972875459,"Ift122/Glmn/Abl1/Ift172/Nup50/Stk4/Phactr4",7
+"GO:0048588","developmental cell growth","9/260","291/28891",0.00136457082925737,0.0319981971266437,0.026031972875459,"Npr2/Rtn4r/Abl1/Flrt1/Macf1/Pum2/Nfix/Apoe/Eif2b2",9
+"GO:0002758","innate immune response-activating signaling pathway","8/260","244/28891",0.00173581546119794,0.037199330016136,0.0302633284660582,"Ankrd17/Zc3hav1/Trim25/Rftn1/Pum2/Otud4/Ltf/S100a14",8
+"GO:0050678","regulation of epithelial cell proliferation","11/260","426/28891",0.00177791796672007,0.0378509377651721,0.0307934406839813,"Ift122/Atp7a/Ift172/Rictor/Smad3/Stk4/Cdkn1b/Apoe/Cdh13/Map2k5/Thbs4",11
+"GO:0021587","cerebellum morphogenesis","4/260","58/28891",0.00185729232711822,0.0387754707777714,0.0315455898819876,"Atp7a/Abl1/Dab1/Nfix",4
+"GO:0010563","negative regulation of phosphorus metabolic process","11/260","430/28891",0.00191222408917146,0.0394137398252156,0.0320648504660933,"Ppp1r11/Epm2a/Abl1/Csk/Uri1/Hnrnpu/Ankle2/Cdkn1b/Ptpn13/Aida/Apoe",11
+"GO:1900271","regulation of long-term synaptic potentiation","4/260","59/28891",0.00197845804100243,0.0400143138792742,0.0325534444772835,"Abl1/Fam107a/Crtc1/Apoe",4
+"GO:0006893","Golgi to plasma membrane transport","4/260","60/28891",0.00210498130815436,0.042281311192771,0.0343977487779326,"Ccdc93/Exoc6b/Csk/Macf1",4
+"GO:0044091","membrane biogenesis","4/260","61/28891",0.00223698112410051,0.0436076561300557,0.0354767900531095,"Chmp7/Ankle2/Rftn1/Lrp4",4
+"GO:0007162","negative regulation of cell adhesion","9/260","315/28891",0.00233707716383334,0.0447501875867733,0.0364062907925704,"Glmn/Abl1/Dab1/Apoa1/Fam107a/Epb41l5/Mia3/Cdh13/Map2k5",9
+"GO:0021575","hindbrain morphogenesis","4/260","62/28891",0.00237457577956689,0.0449364165068915,0.0365577963970255,"Atp7a/Abl1/Dab1/Nfix",4
+"GO:0031122","cytoplasmic microtubule organization","4/260","62/28891",0.00237457577956689,0.0449364165068915,0.0365577963970255,"Hook3/Tubgcp4/Tubgcp2/Ift172",4
+"GO:0055092","sterol homeostasis","5/260","103/28891",0.00242839653588541,0.044937304337457,0.0365585186871316,"Apoa1/Commd9/Ncor1/Abca1/Apoe",5
+"GO:0048261","negative regulation of receptor-mediated endocytosis","3/260","30/28891",0.00244405610735242,0.044937304337457,0.0365585186871316,"Sh3gl3/Ankrd13d/Neu3",3
+"GO:0031629","synaptic vesicle fusion to presynaptic active zone membrane","3/260","31/28891",0.0026880739430007,0.0483255959975016,0.0393150463827179,"Erc1/Snap23/Cacna1b",3
+"GO:0033688","regulation of osteoblast proliferation","3/260","31/28891",0.0026880739430007,0.0483255959975016,0.0393150463827179,"Abl1/Smad3/Ltf",3
+"GO:0030111","regulation of Wnt signaling pathway","9/260","323/28891",0.00276210253539799,0.0493821204671154,0.0401745765689466,"Abl1/Daam2/Smad3/Scyl2/Stk4/Macf1/Lrp4/Apoe/Pbxip1",9
+"GO:0072594","establishment of protein localization to organelle","11/260","452/28891",0.00280665300179184,0.0499029072186725,0.0405982600201353,"Ift122/Epm2a/Zfyve16/Nup50/Stk4/Macf1/Pex14/Sh3kbp1/Nup188/Tnpo2/Zfand2b",11

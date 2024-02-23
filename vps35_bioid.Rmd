@@ -1,0 +1,430 @@
+---
+title: "vps35_bioid"
+output: html_document
+date: "2024-02-19"
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Install biocmanager packages
+if(!require("BiocManager")){install.packages("BiocManager")}
+if(!require("clusterProfiler")){install.packages("clusterProfiler")}
+if(!require("AnnotationDbi")){install.packages("AnnotationDbi")}
+if(!require("org.Mm.eg.db")){install.packages("org.Mm.eg.db")}
+if(!require("readxl")){install.packages("readxl")}
+if(!require("gplots")){BiocManager::install("gplots")}
+if(!require("stringr")){BiocManager::install("stringr")}
+if(!require("enrichplot")){BiocManager::install("enrichplot")}
+if(!require("viridis")){BiocManager::install("viridis")}
+if(!require("ggplot2")){BiocManager::install("ggplot2")}
+if(!require("pheatmap")){BiocManager::install("pheatmap")}
+if(!require("RColorBrewer")){BiocManager::install("RColorBrewer")}
+if(!require("EnhancedVolcano")){BiocManager::install('EnhancedVolcano')}
+if(!require("xlsx")){BiocManager::install('xlsx')}
+if(!require("UniProt.ws")){BiocManager::install("UniProt.ws")}
+
+# import libraries
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(AnnotationDbi)
+library(readxl)
+library(gplots)
+library(ggupset)
+library(VennDiagram)
+library(stringr)
+library(viridis)
+library(enrichplot)
+library(ggplot2)
+library(pheatmap)
+library(RColorBrewer)
+library(EnhancedVolcano)
+library(xlsx)
+```
+
+```{r data}
+pcutoff = 0.05
+FCcutoff = 1.5
+
+# VPS35 surface vs cyto data
+VPData <- read_excel("10287_SupplementalData__120723-AGEDSURFACE.xlsx", sheet = "Surface1_v_Cyto1")
+keep <- !is.na(rownames(VPData))
+VPData <- VPData[keep,]
+VPData <- VPData[!(duplicated(VPData$Genes)) & !(is.na(VPData$Genes)),]
+VPData$log2_Surface1_v_Cyto1_FC <- ((abs(VPData$Surface1_v_Cyto1_FC))/VPData$Surface1_v_Cyto1_FC) * log(abs(VPData$Surface1_v_Cyto1_FC), base = 2)
+rownames(VPData) <- VPData$Genes
+
+# Surface data
+SuData <- read_excel("10287_SupplementalData__120723-AGEDSURFACE.xlsx", sheet = "Surface2_v_Surface1")
+keep <- !is.na(rownames(SuData))
+SuData <- SuData[keep,]
+SuData <- SuData[!(duplicated(SuData$Genes)) & !(is.na(SuData$Genes)),]
+SuData$log2_Surface2_v_Surface1_FC <- ((abs(SuData$Surface2_v_Surface1_FC))/SuData$Surface2_v_Surface1_FC) * log(abs(SuData$Surface2_v_Surface1_FC), base = 2)
+rownames(SuData) <- SuData$Genes
+
+# Cytosolic data
+CYTData <- read_excel("10287_SupplementalData__120723-AGEDSURFACE.xlsx", sheet = "Cyto2_v_Cyto1")
+keep <- !is.na(rownames(CYTData))
+CYTData <- CYTData[keep,]
+CYTData <- CYTData[!(duplicated(CYTData$Genes)) & !(is.na(CYTData$Genes)),]
+CYTData$log2_Cyto2_v_Cyto1_FC <- ((abs(CYTData$Cyto2_v_Cyto1_FC))/CYTData$Cyto2_v_Cyto1_FC) * log(abs(CYTData$Cyto2_v_Cyto1_FC), base = 2)
+rownames(CYTData) <- CYTData$Genes
+```
+
+```{r hit-lists}
+# find hits >1.5 FC p < 0.05 between compartments, within genotype
+hits_downreg_VP <- VPData[VPData$Surface1_v_Cyto1_FC <= -FCcutoff  & VPData$Surface1_v_Cyto1_pval <= pcutoff,]$Genes
+hits_upreg_VP <- VPData[VPData$Surface1_v_Cyto1_FC >= FCcutoff  & VPData$Surface1_v_Cyto1_pval <= pcutoff,]$Genes
+
+# find hits >1.5 FC p <0.05 between genotypes, within surface compartment
+hits_downreg_VPvsWT_SU <- SuData[SuData$Surface2_v_Surface1_FC <= -FCcutoff  & SuData$Surface2_v_Surface1_pval <= pcutoff,]$Genes
+hits_upreg_VPvsWT_SU <- SuData[SuData$Surface2_v_Surface1_FC >= FCcutoff  & SuData$Surface2_v_Surface1_pval <= pcutoff,]$Genes
+
+# find hits >1.5 FC p <0.05 between genotypes, within cytosolic compartment
+hits_downreg_VPvsWT_CYT <- CYTData[CYTData$Cyto2_v_Cyto1_FC <= -FCcutoff  & CYTData$Cyto2_v_Cyto1_pval <= pcutoff,]$Genes
+hits_upreg_VPvsWT_CYT <- CYTData[CYTData$Cyto2_v_Cyto1_FC >= FCcutoff  & CYTData$Cyto2_v_Cyto1_pval <= pcutoff,]$Genes
+
+# differentially expressed genes for each compartment
+DEG_SU <- append(hits_downreg_VPvsWT_SU, hits_upreg_VPvsWT_SU)
+DEG_CYT <- append(hits_downreg_VPvsWT_CYT, hits_upreg_VPvsWT_CYT)
+
+#export csv files for Cytoscape
+DEG_SU_down <- data.frame(bait = "Surface",
+                           interaction = "iBioID",
+                           prey = hits_downreg_VPvsWT_SU)
+write.xlsx(DEG_SU_down, file = "./cytoscape/cytoscape_network_VP_SU_vs_WT_SU_down.xlsx")
+
+DEG_SU_up <- data.frame(bait = "Surface",
+                           interaction = "iBioID",
+                           prey = hits_upreg_VPvsWT_SU)
+write.xlsx(DEG_SU_up, file = "./cytoscape/cytoscape_network_VP_SU_vs_WT_SU_up.xlsx")
+
+```
+
+```{r}
+x <- list(hits_downreg_VPvsWT_SU, hits_downreg_VPvsWT_CYT, hits_upreg_VPvsWT_SU, hits_upreg_VPvsWT_CYT)
+v.table <- venn(x)
+v.table
+print(attributes(v.table)$intersections$'A:C')
+print(attributes(v.table)$intersections$'A:D')
+print(attributes(v.table)$intersections$'B:C')
+print(attributes(v.table)$intersections$'B:D')
+```
+
+```{r surface compartment Biological process GO}
+# Biological process
+# differentially enriched surface proteins
+GO_results_BP_DEG_SU <- enrichGO(gene = DEG_SU, OrgDb = org.Mm.eg.db, keyType = "SYMBOL", ont = "BP")
+head(GO_results_BP_DEG_SU)
+#GO_results_BP_DEG_SU_filtered <- gofilter(GO_results_BP_DEG_SU, level = 5)
+#head(GO_results_BP_DEG_SU_filtered)
+write.csv(GO_results_BP_DEG_SU_filtered, "GO_results_BP_DEG_Surface2_v_Surface1.csv", row.names=FALSE)
+
+#barplot DEG_SU
+ppi <- 300
+barplot_DEG_SU <- ggplot(GO_results_BP_DEG_SU[1:10], aes(x=Count, y=reorder(Description, Count), fill=-log(p.adjust,10)))+ 
+  geom_bar(stat = "identity") +
+  ggtitle("Genotype-dependent surface proteins") +
+  theme(plot.title = element_text(hjust = 1, vjust=2.12)) +
+  ylab("Biological Process")+
+  theme(plot.margin = unit(c(0.3, 0.1, 0, 0.3), "cm")) +
+  theme(axis.text.y = element_text(size = 9)) +
+  scale_fill_viridis(option = "plasma")
+png(filename = "GO_results_BP_DEG_SU.png", res = ppi, width = 6*ppi, height = 2*ppi)
+barplot_DEG_SU
+dev.off()
+
+barplot_DEG_SU
+
+```
+
+```{r cytosol biological process GO}
+
+# differentially enriched cytosolic
+GO_results_BP_DEG_CYT <- enrichGO(gene = DEG_CYT, OrgDb = org.Mm.eg.db, keyType = "SYMBOL", ont = "BP")
+head(GO_results_BP_DEG_CYT)
+GO_results_BP_DEG_CYT_filtered <- gofilter(GO_results_BP_DEG_CYT, level = 5)
+head(GO_results_BP_DEG_CYT_filtered)
+write.csv(GO_results_BP_DEG_CYT_filtered, "GO_results_BP_DEG_Cyto2_v_Cyto1.csv", row.names=FALSE)
+
+# barplot DEG_CYT
+ppi <- 300
+barplot_DEG_CYT <- ggplot(GO_results_BP_DEG_CYT[1:10], aes(x=Count, y=reorder(Description, Count), fill=-log(p.adjust,10)))+ 
+  geom_bar(stat = "identity") +
+  ggtitle("Genotype-dependent cytosolic proteins") +
+  theme(plot.title = element_text(hjust = 1, vjust=2.12)) +
+  ylab("Biological Process")+
+  theme(plot.margin = unit(c(0.3, 0.1, 0, 0.3), "cm")) +
+  theme(axis.text.y = element_text(size = 9)) +
+  scale_fill_viridis(option = "plasma")
+png(filename = "GO_results_BP_DEG_CYT.png", res = ppi, width = 7*ppi, height = 2*ppi)
+barplot_DEG_CYT
+dev.off()
+
+barplot_DEG_CYT
+
+```
+
+```{r GO Molecular Function}
+# Molecular function
+# differentially enrichedsurface proteome
+GO_results_MF_DEG_SU <- enrichGO(gene = DEG_SU, OrgDb = org.Mm.eg.db, keyType = "SYMBOL", ont = "MF")
+head(GO_results_MF_DEG_SU)
+GO_results_MF_DEG_SU_filtered <- gofilter(GO_results_MF_DEG_SU, level = 4)
+head(GO_results_MF_DEG_SU_filtered)
+write.csv(GO_results_MF_DEG_SU_filtered, "GO_results_MF_DEG_GS-EZR-vs-WT-EZR.csv", row.names=FALSE)
+
+#barplot DEG_SU
+barplot_DEG_SU_MF <- ggplot(GO_results_MF_DEG_SU[1:10], aes(x=Count, y=reorder(Description, Count), fill = -log(p.adjust,10)))+ 
+  geom_bar(stat = "identity") +
+  ggtitle("Genotype-dependent surface proteome") +
+  theme(plot.title = element_text(hjust = 1, vjust=2.12)) +
+  ylab("Molecular Function")+
+  theme(plot.margin = unit(c(0.3, 0.1, 0, 0.3), "cm")) +
+  theme(axis.text.y = element_text(size = 9)) +
+  scale_fill_viridis(option = "plasma")
+
+png(filename = "GO_results_MF_DEG_SU.png", res = ppi, width = 6*ppi, height = 2*ppi)
+barplot_DEG_SU_MF
+dev.off()
+barplot_DEG_SU_MF
+
+```
+
+```{r load heatmap data}
+
+# create matrix of per sample intensity data to feed into pheatmap() function
+# adjust this code depending on your needs
+heatmap_data <- SuData
+rownames(heatmap_data) <- heatmap_data$Genes
+df_heatmap_samples <- as.data.frame(heatmap_data[c(3, 6:11)])
+
+```
+
+```{r}
+# subset dataframe by gained hit list
+df_gained <- subset(df_heatmap_samples, df_heatmap_samples$Genes %in% hits_upreg_VPvsWT_SU)
+rownames(df_gained) <- df_gained$Genes
+df_gained <- subset(df_gained, select = -c(1)) #drop gene name columns as these are now the rownames
+df_gained <- as.matrix(df_gained)
+
+
+#set quantile break points <https://slowkow.com/notes/pheatmap-tutorial/>
+quantile_breaks <- function(xs, n = 100) {
+  breaks <- quantile(xs, probs = seq(0, 1, length.out = n))
+  breaks[!duplicated(breaks)]
+}
+toPlot_gained_breaks <- quantile_breaks(df_gained, n = 101)
+
+#make heatmap of gained interactions
+heatmap_gained<- pheatmap(t(df_gained),
+                          cluster_rows = FALSE,
+                          treeheight_col = 10,
+                          #cutree_rows = 3,
+                          color = viridis(100, option = "plasma"),
+                          breaks = toPlot_gained_breaks,
+                          main = "Surface interactions gained in VPS35",
+                          #cellwidth = 10, 
+                          cellheight = 10, 
+                          show_rownames = TRUE, 
+                          show_colnames = TRUE, 
+                          angle_col = 315
+                          )
+
+#save gained heatmap
+png(filename = "heatmap_gained.png", res = ppi, width = 8*ppi, height = 1.5*ppi)
+heatmap_gained
+dev.off()
+
+heatmap_gained
+```
+```{r}
+# subset dataframe by gained hit list
+df_lost <- subset(df_heatmap_samples, df_heatmap_samples$Genes %in% hits_downreg_VPvsWT_SU)
+rownames(df_lost) <- df_lost$Genes
+df_lost <- subset(df_lost, select = -c(1)) #drop gene name columns as these are now the rownames
+df_lost <- as.matrix(df_lost)
+
+
+#set quantile break points <https://slowkow.com/notes/pheatmap-tutorial/>
+quantile_breaks <- function(xs, n = 100) {
+  breaks <- quantile(xs, probs = seq(0, 1, length.out = n))
+  breaks[!duplicated(breaks)]
+}
+toPlot_lost_breaks <- quantile_breaks(df_lost, n = 101)
+
+#make heatmap of gained interactions
+heatmap_lost<- pheatmap(t(df_lost),
+                          cluster_rows = FALSE,
+                          treeheight_col = 10,
+                          #cutree_rows = 3,
+                          color = viridis(100, option = "plasma"),
+                          breaks = toPlot_gained_breaks,
+                          main = "Surface interactions gained in VPS35",
+                          #cellwidth = 10, 
+                          cellheight = 10, 
+                          show_rownames = TRUE, 
+                          show_colnames = TRUE, 
+                          angle_col = 315
+                          )
+
+#save gained heatmap
+png(filename = "heatmap_lost.png", res = ppi, width = 8*ppi, height = 1.5*ppi)
+heatmap_lost
+dev.off()
+
+heatmap_lost
+```
+
+```{r volcano plots}
+FCcutoff <- 1.5
+pCutoff <- 0.05
+ppi <- 300
+
+# Surface WT vs VP volcano plot
+volcano_VPvsWT_SU <- EnhancedVolcano(SuData,
+                lab = rownames(SuData),
+                drawConnectors = FALSE,
+                widthConnectors = 0.4,
+                typeConnectors = "closed",
+                x = 'log2_Surface2_v_Surface1_FC',
+                y = 'Surface2_v_Surface1_pval',
+                xlim = c(-5.5, 5.5),
+                ylim = c(0, 6),
+                title = "G2019S vs WT ezrin interactors",
+                subtitle = NULL,
+                legendPosition = "bottom",
+                FCcutoff = log2(FCcutoff),
+                pCutoff = pCutoff, 
+                col = c('black', 'pink', 'purple', 'red3'),) 
+volcano_VPvsWT_SU
+png(filename = "./volcano_VPvsWT_SU.png", res = ppi, width = 7*ppi, height = 7*ppi)
+  volcano_VPvsWT_SU
+dev.off()
+
+# Ezrin WT vs GS volcano plot
+volcano_VPvsWT_CYT <- EnhancedVolcano(CYTData,
+                lab = rownames(CYTData),
+                drawConnectors = FALSE,
+                widthConnectors = 0.4,
+                typeConnectors = "closed",
+                x = 'log2_Cyto2_v_Cyto1_FC',
+                y = 'Cyto2_v_Cyto1_pval',
+                xlim = c(-5.5, 5.5),
+                ylim = c(0, -log10(10e-12)),
+                title = "G2019S vs WT cytosolic proteins",
+                subtitle = NULL,
+                legendPosition = "bottom",
+                FCcutoff = log2(FCcutoff),
+                pCutoff = pCutoff, 
+                col = c('black', 'pink', 'purple', 'red3'),) 
+volcano_VPvsWT_CYT
+png(filename = "./volcano_VPvsWT_CYT.png", res = ppi, width = 7*ppi, height = 7*ppi)
+  volcano_VPvsWT_CYT
+dev.off()
+
+```
+
+```{r reactive astrocyte markers from Liddelow et al., 2017.}
+reactive_markers <- c("Lcn2", "Steap4", "S1pr3", "Timp1", "Hspb1", "Cxcl10", "Cd44", "Osmr", "Cp", "Serpina3n", "Aspg", "Vim", "Gfap", "H2-T23", "Serping1", "H2-D1", "Ggfa1", "Iigp1", "Gbp2", "Fbln5", "Ugt1a1", "Fkbp5", "Psmb8", "Srgn", "Amigo2", "Clcf1", "Tgm1", "Ptx3", "S100a10", "Sphk1", "Cd109", "Ptgs2", "Emp1", "Slc10a6", "Tm4sf1", "B3gnt5", "Cd14")
+
+#heatmap settings
+#myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)
+annotation_row = data.frame(Subtype = c(rep("pan-reactive", 13), rep("A1 specific", 12), rep("A2 specific", 12)))
+rownames(annotation_row) <-reactive_markers
+
+toPlot_reactive <- as.data.frame(CYTData[CYTData$Genes %in% reactive_markers,])
+toPlot_reactive$AVG_WT_CYTO <-  rowMeans(toPlot_reactive[c(9:11)])
+toPlot_reactive$AVG_VP_CYTO <-  rowMeans(toPlot_reactive[c(6:8)])
+rownames(toPlot_reactive) <- toPlot_reactive$Genes
+toPlot_reactive <- subset(toPlot_reactive, select = c(22:23))
+
+#set quantile break points <https://slowkow.com/notes/pheatmap-tutorial/>
+quantile_breaks <- function(xs, n = 100) {
+  breaks <- quantile(xs, probs = seq(0, 1, length.out = n))
+  breaks[!duplicated(breaks)]
+}
+toPlot_reactive_breaks <- quantile_breaks(toPlot_reactive$AVG_WT_CYTO, n = 101)
+
+#reorder by annotation
+toPlot_reactive_ordered <- toPlot_reactive[rownames(annotation_row), ]
+toPlot_reactive_ordered <- toPlot_reactive_ordered[!(grepl("NA", rownames(toPlot_reactive_ordered))), ]
+
+#plot heatmap
+heatmap_reactive <- pheatmap(as.matrix(t(toPlot_reactive_ordered)), 
+                             scale = "none", 
+                             fontsize_row = 10, 
+                             fontsize_col = 10, 
+                             color = viridis(length(toPlot_reactive_breaks)),
+                             breaks = toPlot_reactive_breaks, 
+                             angle_col = 315, 
+                             main = "Reactive astrocyte marker genes in WT vs VPS35 astrocyte cytosol", 
+                             annotation_col = annotation_row, 
+                             cluster_cols = FALSE, cluster_rows = FALSE, 
+                             cellheight = 15, cellwidth = 15)
+
+heatmap_reactive
+
+ppi <- 300
+png(file = "./heatmap_reactivity_markers.png", width = 11*ppi, height = 2*ppi, res = ppi)
+  heatmap_reactive
+dev.off()
+
+```
+
+
+```{r cell-type marker genes from Soto et al., 2023 and/or from <https://www.abcam.com/neuroscience/neural-markers-guide>. Force undetected genes to 0}
+cell_type_markers <- c("Gfap", "Slc4a4", "Slc1a2", "Gja1", "Aldh1l1", "Rbfox3", "Nefm", "Nefh", "Slc17a6", "Eno2", "Mog", "Sox10", "Mobp", "Mbp", "Olig2", "Cldn11", "Cspg4", "Pdgfra", "Cacng4", "Cd68", "Ptprc", "Ccl3", "Tnf")
+
+#heatmap settings
+#myheatcol <- grDevices::colorRampPalette(c("lightblue", "white", "orange"))(256)
+annotation_row = data.frame(Celltype = c(rep("astrocyte", 5), rep("neuron", 5), rep("oligodendrocyte", 5), rep("OPC", 4), rep("microglia", 4)))
+rownames(annotation_row) <-cell_type_markers
+
+
+toPlot_celltype <- as.data.frame(CYTData[CYTData$Genes %in% cell_type_markers,])
+toPlot_celltype$AVG_WT_CYTO <-  rowMeans(toPlot_celltype[c(9:11)])
+toPlot_celltype$AVG_VP_CYTO <-  rowMeans(toPlot_celltype[c(6:8)])
+rownames(toPlot_celltype) <- toPlot_celltype$Genes
+toPlot_celltype <- subset(toPlot_celltype, select = c(22:23))
+
+#set quantile break points <https://slowkow.com/notes/pheatmap-tutorial/>
+quantile_breaks <- function(xs, n = 100) {
+  breaks <- quantile(xs, probs = seq(0, 1, length.out = n))
+  breaks[!duplicated(breaks)]
+}
+toPlot_celltype_breaks <- quantile_breaks(toPlot_celltype$AVG_WT_CYTO, n = 101)
+
+#reorder by annotation
+toPlot_celltype_ordered <- toPlot_celltype[rownames(annotation_row), ]
+toPlot_celltype_ordered <- toPlot_celltype_ordered[!(grepl("NA", rownames(toPlot_celltype_ordered))), ]
+
+#plot heatmap
+heatmap_celltype <- pheatmap(as.matrix(t(toPlot_celltype_ordered)), 
+                             scale = "none", 
+                             fontsize_row = 10, 
+                             fontsize_col = 10, 
+                             color = viridis(length(toPlot_reactive_breaks)),
+                             breaks = toPlot_reactive_breaks, 
+                             angle_col = 315, 
+                             main = "Reactive astrocyte marker genes in WT vs VPS35 astrocyte cytosol", 
+                             annotation_col = annotation_row, 
+                             cluster_cols = FALSE, cluster_rows = FALSE, 
+                             cellheight = 15, cellwidth = 15)
+
+heatmap_celltype
+
+ppi <- 300
+png(file = "./heatmap_celltype_markers.png", width = 11*ppi, height = 2*ppi, res = ppi)
+  heatmap_celltype
+dev.off()
+
+```
+
+
+```{r}
+session.info()
+```
+
